@@ -15,8 +15,11 @@ const app: FastifyPluginAsync<AppOptions> = async (
 ): Promise<void> => {
   // This loads all plugins defined in routes
   // define your routes in one of these
+
   await fastify.register(AutoLoad, {
-    dir: join(__dirname, "routes"),
+    dir: join(__dirname, "."),
+    matchFilter: /.+controller\.(ts|js)/,
+    dirNameRoutePrefix: false,
     routeParams: true,
     options: opts,
   });
