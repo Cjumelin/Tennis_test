@@ -45,7 +45,6 @@ const app: FastifyPluginAsync<AppOptions> = async (
   opts
 ): Promise<void> => {
   await initPlugins(fastify, opts);
-  console.log(fastify.printRoutes());
 };
 
 export default app;
