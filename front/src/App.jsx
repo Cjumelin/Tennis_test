@@ -1,9 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [players, setPlayers] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    console.log(import.meta.env.VITE_API_URL + "/players")
+    fetch(
+      import.meta.env.VITE_API_URL + "/players"
+    )
+      .then(res => res.json())
+      .then(response => {
+        setPlayers(response);
+        setIsLoading(false);
+      })
+      .catch(error => console.log(error));
+  }, []);
 
   return (
     <div className="App">
@@ -11,15 +24,9 @@ function App() {
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
       </div>
       <h1 className='tw-text-3xl tw-font-bold tw-underline'>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
