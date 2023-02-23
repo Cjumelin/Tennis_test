@@ -1,14 +1,26 @@
-service: aws-node-http-api-project
-frameworkVersion: '3'
+service: API
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs8.10
+  region: eu-west-1
+  profile: default
+  stage: dev
+
+plugins:
+  - serverless-offline
 
 functions:
-  api:
-    handler: index.handler
+  playerController:
+    handler: handler.handler
     events:
       - httpApi:
-          path: /
+          path: /players
           method: get
+      - httpApi:
+          path: /players/{id}
+          method: get
+          request:
+            parameters:
+              paths:
+              id: true
